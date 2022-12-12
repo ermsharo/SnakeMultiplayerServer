@@ -1,8 +1,20 @@
 const express = require("express")
+const dotenv = require("dotenv");
 const app = express()
 const cors = require("cors")
 const http = require('http').Server(app);
 const PORT = 4000
+const bodyParser = require("body-parser");
+const jsonParser = bodyParser.json();
+dotenv.config();
+
+require("dotenv-safe").config();
+
+const port = process.env.PORT;
+app.use(jsonParser);
+app.use(cors());
+
+
 const socketIO = require('socket.io')(http, {
   cors: {
     origin: "http://localhost:3000"
@@ -35,6 +47,15 @@ socketIO.on('connection', (socket) => {
     socket.disconnect()
   });
 });
+
+db.authenticate()
+  .then(() => {
+    console.log("Database connected");
+  })
+  .catch((err) => {
+    console.log("DB connection error :", err);
+  });
+
 
 app.get("/api", (req, res) => {
   res.json({ message: "Hello" })
