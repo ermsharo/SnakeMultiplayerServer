@@ -3,9 +3,9 @@ const dotenv = require("dotenv");
 const app = express()
 const cors = require("cors")
 const http = require('http').Server(app);
-// const PORT = 4000
 const bodyParser = require("body-parser");
 const jsonParser = bodyParser.json();
+const authRoutes = require("./routes/auth");
 dotenv.config();
 
 require("dotenv-safe").config();
@@ -49,9 +49,8 @@ socketIO.on('connection', (socket) => {
 });
 
 
-app.get("/api", (req, res) => {
-  res.json({ message: "Hello" })
-});
+//Routes
+app.use(authRoutes);
 
 
 http.listen(port, () => {
