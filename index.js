@@ -3,7 +3,7 @@ const dotenv = require("dotenv");
 const app = express()
 const cors = require("cors")
 const http = require('http').Server(app);
-const PORT = 4000
+// const PORT = 4000
 const bodyParser = require("body-parser");
 const jsonParser = bodyParser.json();
 dotenv.config();
@@ -48,20 +48,12 @@ socketIO.on('connection', (socket) => {
   });
 });
 
-db.authenticate()
-  .then(() => {
-    console.log("Database connected");
-  })
-  .catch((err) => {
-    console.log("DB connection error :", err);
-  });
-
 
 app.get("/api", (req, res) => {
   res.json({ message: "Hello" })
 });
 
 
-http.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
+http.listen(port, () => {
+  console.log(`Server listening on ${port}`);
 });

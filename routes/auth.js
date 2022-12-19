@@ -1,7 +1,6 @@
 const path = require("path");
 const { Op } = require("sequelize");
 const express = require("express");
-const User = require("../models/User");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 require("dotenv-safe").config();
@@ -11,20 +10,8 @@ const jwt = require("jsonwebtoken");
 
 
 router.post("/auth/singin", async (req, res) => {
-    console.log("singin req", req.body);
+
     const { email, password } = req.body.formInputs;
-    console.log("->", email, password);
-    let atalho = "emilio@mail.com";
-    let atalhoSenha = "abc123";
-
-    const userByMail = getUserByMail.dataValues;
-    console.log("---> user obj", userByMail);
-    let isPasswordValid = bcrypt.compareSync(
-        atalhoSenha,
-        userByMail.password
-    );
-
-
 
 
     if (
@@ -45,5 +32,6 @@ router.post("/auth/singin", async (req, res) => {
 
     return res.status(400).send("User or password invalid");
 });
+
 
 module.exports = router;
