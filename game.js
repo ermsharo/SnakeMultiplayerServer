@@ -65,10 +65,6 @@ class Game {
   }
 
 
-  hasDuplicates(array) {
-    return (new Set(array)).size !== array.length;
-  }
-
   verifySnakesCollisions() {
 
     let coordsPlayer1 = this?.playerOneInfo?.player_position;
@@ -114,6 +110,10 @@ class Game {
 
 
   regularGame() {
+    console.log("verify walls",this.verifyWalls());
+    console.log("verify collisons",this.verifySnakesCollisions());
+
+
     return {
       'gameStatus': 'running',
       'gameMessage': '',
@@ -128,22 +128,14 @@ class Game {
 
   //Essa função vai servir para determinar o estado da partida
   getGameStatus(PlayerOneData, PlayerTwoData) {
-    this.verifyWalls();
-    this.verifySnakesCollisions();
+
+    // this.verifySnakesCollisions();
     if (this.verifyWaiting(PlayerOneData, PlayerTwoData)) return this.verifyWaiting(PlayerOneData, PlayerTwoData);
-    if (this.verifyWalls() || this.verifySnakesCollisions()) {
-      return {
-        'gameStatus': 'done',
-        'gameMessage': 'fim de jogo',
-        'playerOnePosition': this?.playerOneInfo?.player_position,
-        'playerTwoPositon': this?.playerTwoInfo?.player_position,
-        'playerOnePoints': this?.getPlayerPoints(this?.playerOneInfo?.player_position),
-        'playerTwoPoints': this?.getPlayerPoints(this?.playerTwoInfo?.player_position),
-        'playerOneName': 'user1@mail.com',
-        'playerTwoName': 'user2@mail.com',
-      }
-    }
+
     return this.regularGame();
+
+
+    
   }
 }
 
