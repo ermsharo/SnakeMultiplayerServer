@@ -32,7 +32,7 @@ socketIO.on('connection', (socket) => {
   console.log(`⚡: ${socket.id} user just connected!`)
   socket.on("message", data => {
     socketIO.emit("messageResponse", data)
-    console.log("Data here", data);
+    // console.log("Data here", data);
   })
 
   socket.on("newUser", data => {
@@ -40,9 +40,13 @@ socketIO.on('connection', (socket) => {
     socketIO.emit("newUserResponse", users)
   })
 
+  socket.on("refresh", data => {
+    g.cleanupPlayers()
+  })
+
   socket.on("gameData", data => {
     g.setPlayersInfo(data.info);
-    playerOneInfo = data;
+    // console.log("Data info",data.info )
     socketIO.emit("gameData", g.getGameStatus())
   })
 
@@ -52,6 +56,7 @@ socketIO.on('connection', (socket) => {
     console.log('🔥: A user disconnected');
     users = users.filter(user => user.socketID !== socket.id)
     socketIO.emit("newUserResponse", users)
+    g.cleanupPlayers()
     socket.disconnect()
   });
 });

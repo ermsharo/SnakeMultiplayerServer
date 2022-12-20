@@ -27,15 +27,17 @@ class Game {
   playerTwoInfo = null;
 
 
-  setPlayersInfo(info) {
-    // console.log("from set players info")
-    let { player_id, player_token, player_position } = info;
-    // console.log("player id", player_id);
-    // console.log("player token", player_token);
-    // console.log("player position", player_position);
+  cleanupPlayers(){
+    this.playerOneInfo = null; 
+    this.playerTwoInfo = null;
+  }
 
-    if(player_id == 1) this.setPlayerOneInfo(info);
-    if(player_id == 2) this.setPlayerTwoInfo(info);
+  setPlayersInfo(info) {
+    let { player_id, player_token, player_position } = info;
+
+    if (player_id == 1) this.setPlayerOneInfo(info);
+    if (player_id == 2) this.setPlayerTwoInfo(info);
+
 
   }
 
@@ -49,11 +51,11 @@ class Game {
     // console.log("player two info setted", info)
   }
 
-  verifyWalls(){
+  verifyWalls() {
 
   }
 
-  verifySnakesCollisions(){
+  verifySnakesCollisions() {
 
   }
 
@@ -62,7 +64,10 @@ class Game {
   }
 
   verifyWaiting() {
-    if (!this.playerOneInfo || !this.playerTwoInfo) {
+    console.log("playerOneInfo ->",this.playerOneInfo)
+    console.log("playerTwoInfo ->",this.playerTwoInfo)
+
+    if (this.playerOneInfo == null || this.playerTwoInfo == null) {
       return {
         'gameStatus': 'waiting',
         'gameMessage': 'Aguardando demais jogadores na partida',
@@ -77,22 +82,32 @@ class Game {
     return false;
   }
 
-  getPlayerPoints(array){
-    return null;
+  getPlayerPoints(array) {
+    return 0;
   }
 
-  regularGame(){
-  console.log("Player 1",this.playerOneInfo)
-  console.log("Player 2",this.playerTwoInfo)
+  getPlayerNames(playerID) {
+
+
+
+  }
+
+  getNextApplePosition() {
+
+  }
+
+  regularGame() {
+    console.log("Player 1", this?.playerOneInfo)
+    console.log("Player 2", this?.playerTwoInfo)
     return {
       'gameStatus': 'running',
       'gameMessage': '',
-      'playerOnePosition': this.playerOneInfo.player_position,
-      'playerTwoPositon': this.playerTwoInfo.player_position,
-      'playerOnePoints': null,
-      'playerTwoPoints': null,
-      'playerOneName': null,
-      'playerTwoName': null,
+      'playerOnePosition': this?.playerOneInfo?.player_position,
+      'playerTwoPositon': this?.playerTwoInfo?.player_position,
+      'playerOnePoints': this?.getPlayerPoints(this?.playerOneInfo?.player_position),
+      'playerTwoPoints': this?.getPlayerPoints(this?.playerTwoInfo?.player_position),
+      'playerOneName': 'user1@mail.com',
+      'playerTwoName': 'user2@mail.com',
     }
   }
 
@@ -100,8 +115,8 @@ class Game {
   getGameStatus(PlayerOneData, PlayerTwoData) {
 
     if (this.verifyWaiting(PlayerOneData, PlayerTwoData)) return this.verifyWaiting(PlayerOneData, PlayerTwoData);
-    this.regularGame()
-   
+    return this.regularGame()
+
   }
 
   verifyPlayers() {
