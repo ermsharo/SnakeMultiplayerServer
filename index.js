@@ -6,6 +6,8 @@ const http = require('http').Server(app);
 const bodyParser = require("body-parser");
 const jsonParser = bodyParser.json();
 const authRoutes = require("./routes/auth");
+const Game = require("./game");
+
 dotenv.config();
 
 require("dotenv-safe").config();
@@ -17,11 +19,19 @@ app.use(cors());
 
 const socketIO = require('socket.io')(http, {
   cors: {
-    origin: "http://localhost:3000"
+    origin: "*"
   }
 });
 
 app.use(cors())
+
+
+let playerOneInfo; 
+let playerTwoInfo;
+g = new Game();
+
+
+
 let users = []
 
 socketIO.on('connection', (socket) => {
@@ -31,14 +41,21 @@ socketIO.on('connection', (socket) => {
     console.log("Data here", data);
   })
 
-  socket.on("typing", data => (
-    socket.broadcast.emit("typingResponse", data)
-  ))
 
   socket.on("newUser", data => {
     users.push(data)
     socketIO.emit("newUserResponse", users)
   })
+
+
+  socket.on("gameData", data => {
+    // users.push(data)
+    console.log("Data here",data)
+    playerOneInfo = data; 
+    socketIO.emit("gameData", playerOneInfo)
+  })
+
+  
 
   socket.on('disconnect', () => {
     console.log('🔥: A user disconnected');

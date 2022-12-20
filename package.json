@@ -24,6 +24,7 @@
     "jsonwebtoken": "^8.5.1",
     "load": "^1.0.2",
     "nodemon": "^2.0.20",
+    "react-json-view": "^1.21.3",
     "sequelize": "^6.21.4",
     "socket.io": "^4.5.1",
     "sqlite3": "^5.0.11"

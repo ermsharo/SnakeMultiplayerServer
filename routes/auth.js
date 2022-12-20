@@ -9,6 +9,9 @@ const jwt = require("jsonwebtoken");
 
 const port = process.env.PORT;
 
+let player_1_status; 
+let player_2_status;
+
 const returnToken = (user_id) => {
     const token = jwt.sign({id:user_id }, process.env.SECRET, {
         expiresIn: 3600,
