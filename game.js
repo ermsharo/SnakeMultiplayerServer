@@ -23,23 +23,46 @@ class Game {
   // }
 
   //Objeto de dinámica do jogo
-  playerOneInfo;
-  playerTwoInfo;
+  playerOneInfo = null;
+  playerTwoInfo = null;
 
-  setPlayerOneInfo(info){
-    this.playerOneInfo = info; 
+
+  setPlayersInfo(info) {
+    // console.log("from set players info")
+    let { player_id, player_token, player_position } = info;
+    // console.log("player id", player_id);
+    // console.log("player token", player_token);
+    // console.log("player position", player_position);
+
+    if(player_id == 1) this.setPlayerOneInfo(info);
+    if(player_id == 2) this.setPlayerTwoInfo(info);
+
   }
 
-  setPlayerTwoInfo(info){
-    this.playerTwoInfo = info; 
+  setPlayerOneInfo(info) {
+    this.playerOneInfo = info;
+    // console.log("player one info setted", info)
   }
 
-  verifyEndOfGame(PlayerOneData, PlayerTwoData) {
+  setPlayerTwoInfo(info) {
+    this.playerTwoInfo = info;
+    // console.log("player two info setted", info)
+  }
+
+  verifyWalls(){
 
   }
 
-  verifyWaiting(PlayerOneData, PlayerTwoData) {
-    if (!PlayerOneData || !PlayerTwoData) {
+  verifySnakesCollisions(){
+
+  }
+
+  verifyEndOfGame() {
+
+  }
+
+  verifyWaiting() {
+    if (!this.playerOneInfo || !this.playerTwoInfo) {
       return {
         'gameStatus': 'waiting',
         'gameMessage': 'Aguardando demais jogadores na partida',
@@ -54,12 +77,31 @@ class Game {
     return false;
   }
 
+  getPlayerPoints(array){
+    return null;
+  }
+
+  regularGame(){
+  console.log("Player 1",this.playerOneInfo)
+  console.log("Player 2",this.playerTwoInfo)
+    return {
+      'gameStatus': 'running',
+      'gameMessage': '',
+      'playerOnePosition': this.playerOneInfo.player_position,
+      'playerTwoPositon': this.playerTwoInfo.player_position,
+      'playerOnePoints': null,
+      'playerTwoPoints': null,
+      'playerOneName': null,
+      'playerTwoName': null,
+    }
+  }
+
   //Essa função vai servir para determinar o estado da partida
   getGameStatus(PlayerOneData, PlayerTwoData) {
 
-    if (verifyWaiting(PlayerOneData, PlayerTwoData)) return verifyWaiting(PlayerOneData, PlayerTwoData);
-
-
+    if (this.verifyWaiting(PlayerOneData, PlayerTwoData)) return this.verifyWaiting(PlayerOneData, PlayerTwoData);
+    this.regularGame()
+   
   }
 
   verifyPlayers() {

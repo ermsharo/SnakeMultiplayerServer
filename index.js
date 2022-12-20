@@ -25,13 +25,7 @@ const socketIO = require('socket.io')(http, {
 
 app.use(cors())
 
-
-let playerOneInfo; 
-let playerTwoInfo;
-g = new Game();
-
-
-
+g = new Game()
 let users = []
 
 socketIO.on('connection', (socket) => {
@@ -41,21 +35,18 @@ socketIO.on('connection', (socket) => {
     console.log("Data here", data);
   })
 
-
   socket.on("newUser", data => {
     users.push(data)
     socketIO.emit("newUserResponse", users)
   })
 
-
   socket.on("gameData", data => {
-    // users.push(data)
-    console.log("Data here",data)
-    playerOneInfo = data; 
-    socketIO.emit("gameData", playerOneInfo)
+    g.setPlayersInfo(data.info);
+    playerOneInfo = data;
+    socketIO.emit("gameData", g.getGameStatus())
   })
 
-  
+
 
   socket.on('disconnect', () => {
     console.log('🔥: A user disconnected');
