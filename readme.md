@@ -20,3 +20,10 @@ senha: pass2
 
 ## Para logar 2 usuários em um ambiente local
 A aplicação do cliente, utiliza o localstorage do navegador para armazenar os dados, caso seja necessário carregar dois usuários simultaneamente, acessar um dos usuários, em outro navegador ou em uma aba anonima. 
+
+## Como executar
+Na raiz do repositório
+
+    cd my-app
+    npm i 
+    npm start 
