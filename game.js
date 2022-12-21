@@ -124,6 +124,7 @@ class Game {
     console.log('playerOnePosition', this?.playerOneInfo?.player_position)
     console.log('playerTwoPositon', this?.playerTwoInfo?.player_position)
 
+
     return {
       'gameStatus': 'running',
       'gameMessage': '',
@@ -141,7 +142,24 @@ class Game {
 
     // this.verifySnakesCollisions();
     if (this.verifyWaiting(PlayerOneData, PlayerTwoData)) return this.verifyWaiting(PlayerOneData, PlayerTwoData);
+    
+    if (this.verifyWalls() || this.verifySnakesCollisions()) {
+      console.log("verify walls", this.verifyWalls());
+      console.log("verify collisons", this.verifySnakesCollisions());
+      console.log('playerOnePosition', this?.playerOneInfo?.player_position)
+      console.log('playerTwoPositon', this?.playerTwoInfo?.player_position)
 
+      return {
+        'gameStatus': 'done',
+        'gameMessage': 'fim da partida',
+        'playerOnePosition': this?.playerOneInfo?.player_position,
+        'playerTwoPositon': this?.playerTwoInfo?.player_position,
+        'playerOnePoints': this?.getPlayerPoints(this?.playerOneInfo?.player_position),
+        'playerTwoPoints': this?.getPlayerPoints(this?.playerTwoInfo?.player_position),
+        'playerOneName': 'user1@mail.com',
+        'playerTwoName': 'user2@mail.com',
+      }
+    }
     return this.regularGame();
 
 

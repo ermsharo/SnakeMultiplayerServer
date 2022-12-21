@@ -16,6 +16,8 @@ const port = process.env.PORT;
 app.use(jsonParser);
 app.use(cors());
 
+let cleanUp = false; 
+
 
 const socketIO = require('socket.io')(http, {
   cors: {
@@ -40,10 +42,16 @@ socketIO.on('connection', (socket) => {
   })
 
   socket.on("refresh", data => {
-    g.cleanupPlayers()
+    console.log("Dados forma limpos");
+    cleanUp = true;
+    console.log(g.getGameStatus())
   })
 
   socket.on("gameData", data => {
+    if(cleanUp == true){
+      g.cleanupPlayers()
+      cleanUp = false; 
+    }
     g.setPlayersInfo(data.info);
     // console.log("Data info",data.info )
     socketIO.emit("gameData", g.getGameStatus())
