@@ -2,6 +2,15 @@ class Game {
   constructor() {
   }
 
+  applePositons = [[5, 7], [2, 16], [11, 7], [11, 7], [9, 2], [13, 5], [7, 15], [3, 10], [15, 4], [14, 14], [11, 2], [14, 6],
+  [3, 3], [10, 16], [6, 13], [4, 2], [11, 6], [17, 12], [8, 16], [8, 8], [17, 4], [11, 1], [15, 9], [11, 13], [7, 15], [1, 2],
+  [9, 9], [12, 9], [16, 4], [8, 3]]
+
+  appleIndex = 0;
+
+
+
+
   verifyIsPlayerOne(userId) {
     if (userId == 1) {
       return true;
@@ -110,9 +119,10 @@ class Game {
 
 
   regularGame() {
-    console.log("verify walls",this.verifyWalls());
-    console.log("verify collisons",this.verifySnakesCollisions());
-
+    console.log("verify walls", this.verifyWalls());
+    console.log("verify collisons", this.verifySnakesCollisions());
+    console.log('playerOnePosition', this?.playerOneInfo?.player_position)
+    console.log('playerTwoPositon', this?.playerTwoInfo?.player_position)
 
     return {
       'gameStatus': 'running',
@@ -135,7 +145,7 @@ class Game {
     return this.regularGame();
 
 
-    
+
   }
 }
 
